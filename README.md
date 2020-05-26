@@ -1,30 +1,29 @@
 # Multiple-Version-of-CUDA-On-The-Same-Machine
-1. Install all versions of CUDA you want
+## Install CUDA
+Since .deb file might override your current CUDA driver, I recommend installing it with runfile at [NVIDIA Official Website](https://developer.nvidia.com/cuda-toolkit-archive)
+After downloading CUDA runfile, run 
 ```bash
-Do you accept the previously read EULA?
-accept/decline/quit: accept
-
-You are attempting to install on an unsupported configuration. Do you wish to continue?
-(y)es/(n)o [ default is no ]: y
-
-Install NVIDIA Accelerated Graphics Driver for Linux-x86_64 410.48?
-(y)es/(n)o/(q)uit: n
-
-Install the CUDA 10.0 Toolkit?
-(y)es/(n)o/(q)uit: y
-
-Enter Toolkit Location
- [ default is /usr/local/cuda-10.0 ]:
-
-Do you want to install a symbolic link at /usr/local/cuda?
-(y)es/(n)o/(q)uit: n
-
-Install the CUDA 10.0 Samples?
-(y)es/(n)o/(q)uit: n
+sudo sh cuda_10.0.130_410.48_linux.run --silent --toolkit --override
 ```
-2. Link the default version of CUDA you want to `cuda` in /usr/local/
-3. Add all library directories to $LD_LIBRARY_PATH e.g.
+where `--silent` means do everything without any interactive prompt and `--override` means set the cuda to default.
+
+You may set any version of cuda to default by
 ```bash
-export LD_LIBRARY_PATH=/usr/local/cuda-10.1/lib64:/usr/local/cuda-9.0/lib64
+sudo ln -nsf /usr/local/cuda-10.0 /usr/local/cuda
+```
+
+## Install CuDNN
+Download cuDNN .tgz file at [CUDNN](https://developer.nvidia.com/rdp/cudnn-archive) 
+then
+```bash
+tar -xzvf cudnn-10.0-linux-x64-v7.6.4.38.tgz
+sudo cp cuda/include/cudnn.h /usr/local/cuda/include
+sudo cp cuda/lib64/libcudnn* /usr/local/cuda/lib64
+sudo chmod a+r /usr/local/cuda/include/cudnn.h /usr/local/cuda/lib64/libcudnn*
+```
+## Export LD_LIBRARY_PATH
+Add all CUDA library paths to `$LD_LIBRARY_PATH`
+```bash
+export LD_LIBRARY_PATH=/usr/local/cuda-10.1/lib64:/usr/local/cuda-10.0/lib64
 ```
 That's it!
