@@ -27,3 +27,13 @@ Add all CUDA library paths to `$LD_LIBRARY_PATH`
 export LD_LIBRARY_PATH=/usr/local/cuda-10.1/lib64:/usr/local/cuda-10.0/lib64
 ```
 That's it!
+## Issues
+### Unsupported Compiler: X.X.X. Use --override to override this check
+Install gcc-6 and g++-6, then link gcc-6 & g++-6 to gcc & g++
+```bash
+sudo apt install gcc-6 g++-6
+cd /usr/bin/
+sudo ln -sf gcc-6 gcc
+sudo ln -sf g++-6 g++
+```
+then you are good to keep on installing cuda, remember to link the gcc & g++ back to what it was
